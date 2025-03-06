@@ -1,37 +1,30 @@
-import { useContext } from "react";
-import { CartContext } from "../context/CartContext";
-
-const products = [
-  { id: 1, name: "Laptop", price: 1200 },
-  { id: 2, name: "Phone", price: 800 },
-  { id: 3, name: "Headphones", price: 150 },
-];
+import { products, useCart } from "../context/CartContext";
 
 const ProductListing = () => {
-  const { cart, addToCart, removeFromCart } = useContext(CartContext);
+  const { cart, addToCart, removeFromCart } = useCart();
 
   return (
     <div className="container mt-4">
-      <h2>Products</h2>
-      <ul className="list-group">
+      <h2 className="text-center mb-4 text-primary fw-bold">Our Products</h2>
+      <ul className="list-group shadow-sm rounded">
         {products.map((product) => {
           const inCart = cart.some((item) => item.id === product.id);
 
           return (
             <li
               key={product.id}
-              className="list-group-item d-flex justify-content-between"
+              className="list-group-item d-flex justify-content-between align-items-center py-3"
             >
-              <span>
-                {product.name} - ${product.price}
+              <span className="fw-semibold">
+                {product.name} - <span className="text-success">${product.price}</span>
               </span>
               <button
-                className={`btn ${inCart ? "btn-danger" : "btn-primary"}`}
+                className={`btn ${inCart ? "btn-danger" : "btn-primary"} btn-sm fw-bold px-3`}
                 onClick={() =>
                   inCart ? removeFromCart(product.id) : addToCart(product)
                 }
               >
-                {inCart ? "Remove from Cart" : "Add to Cart"}
+                {inCart ? "Remove" : "Add"}
               </button>
             </li>
           );
